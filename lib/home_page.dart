@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voicechat/feature_box.dart';
 import 'package:voicechat/pallette.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,54 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           // Chat bubble
-
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 30).copyWith(
+              top: 30,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all  (
+                color: Pallete.borderColor,
+              ),
+              borderRadius: BorderRadius.circular(20).copyWith(
+                topLeft: Radius.zero,
+              ),
+            ),
+            child: const Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text('Good Morning, what task can I do for you?', style: const TextStyle(
+                fontFamily: 'Cera Pro',
+                color: Pallete.mainFontColor,
+                fontSize: 25,
+              )
+              ),
+          )
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(top: 10, left: 22),
+            child: const Text('Here are a few features', style: TextStyle(
+              fontFamily: 'Cera Pro',
+              color: Pallete.mainFontColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            ),
+          ),
+          // Features list
+          Column(
+            children: [
+              FeatureBox(
+                  color: Pallete.firstSuggestionBoxColor,
+                  headerText: 'ChatGPT',
+                  descriptionText: 'A smarter way to stay organized and informed with ChatGPT'
+              ),
+            ],
+          )
         ],
       )
     );
