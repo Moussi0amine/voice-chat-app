@@ -27,23 +27,30 @@ class FeatureBox extends StatelessWidget {
         ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            vertical: 10
+            vertical: 20.0
         ).copyWith(
           left: 15,
         ),
         child: Column(
           children: [
-            Text(headerText, style: TextStyle(
-          fontFamily: 'Cera Pro',
-          color: Pallete.blackColor,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-        ),
-            Text(descriptionText, style: TextStyle(
-              fontFamily: 'Cera Pro',
-              color: Pallete.blackColor,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(headerText, style: TextStyle(
+                        fontFamily: 'Cera Pro',
+                        color: Pallete.blackColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
             ),
+            const SizedBox(height: 3),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(descriptionText, style: TextStyle(
+                fontFamily: 'Cera Pro',
+                color: Pallete.blackColor,
+              ),
+              ),
             ),
           ],
         ),
