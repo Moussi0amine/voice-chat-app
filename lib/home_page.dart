@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:voicechat/feature_box.dart';
 import 'package:voicechat/pallette.dart';
 
@@ -10,6 +12,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final speechToText = SpeechToText();
+  String lastWords = '';
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeechToText();
+  }
+
+  Future<void> initSpeechToText() async {
+    speechToText.initialize();
+    setState(() {});
+  }
+
+  /// Each time to start a speech recognition session
+  Future<void> startListening() async {
+    await speechToText.listen(onResult: onSpeechResult);
+    setState(() {});
+  }
+
+  /// Manually stop the active speech recognition session
+  /// Note that there are also timeouts that each platform enforces
+  /// and the SpeechToText plugin supports setting timeouts on the
+  /// listen method.
+  Future<void> stopListening() async {
+    await speechToText.stop();
+    setState(() {});
+  }
+
+  /// This is the callback that the SpeechToText plugin calls when
+  /// the platform returns recognized words.
+  void onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      lastWords = result.recognizedWords;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    speechToText.stop();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +158,15 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Pallete.firstSuggestionBoxColor,
-        onPressed: () {},
+        onPressed: () async {
+          if( await speechToText.hasPermission && speechToText.isNotListening) {
+            await startListening();
+          } else if (speechToText.isListening) {
+            await stopListening();
+          } else {
+            initSpeechToText();
+          }
+        },
         child: Icon(Icons.mic),
         ),
     );
